@@ -136,7 +136,7 @@ if ! k0s kubectl get nodes &> /dev/null; then
 fi
 
 # Download and unzip Kustomization files from GitHub
-repo_url="https://github.com/sivakumar-devops/k0s-deploy/blob/main/private-cloud.zip"
+repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.zip"
 destination="~/private-cloud"
 download_and_unzip $repo_url $destination
 
