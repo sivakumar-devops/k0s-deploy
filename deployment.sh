@@ -142,7 +142,7 @@ download_and_unzip $repo_url $destination
 
 # Deploy a sample application using Kustomize
 say 4 "Deploying Bold BI application..."
-kubectl apply -k $destination
+k0s kubectl apply -k $destination
 
 # Show Bold BI text graphic
 show_bold_bi_graphic
