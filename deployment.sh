@@ -85,7 +85,7 @@ function mount_s3_bucket {
 # Function to show Bold BI text graphic
 function show_bold_bi_graphic {
   echo ""
-  echo " ██████╗██╗   ██╗██████╗ ███████╗██████╗ ██╗      ██████╗  ██████╗ ██████╗ "
+  echo "███████╗██╗   ██╗██████╗ ███████╗██████╗ ██╗      ██████╗  ██████╗ ██████╗ "
   echo "██╔════╝██║   ██║██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗██╔═══██╗██╔══██╗"
   echo "██║     ██║   ██║██████╔╝█████╗  ██████╔╝██║     ██║   ██║██║   ██║██████╔╝"
   echo "██║     ██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗██║     ██║   ██║██║   ██║██╔══██╗"
@@ -145,6 +145,6 @@ say 4 "Deploying Bold BI application..."
 k0s kubectl apply -k $destination/private-cloud
 
 # Show Bold BI text graphic
-show_bold_bi_graphic
+#show_bold_bi_graphic
 
 say 2 "Bold BI application deployed successfully!"
