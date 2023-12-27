@@ -52,7 +52,7 @@ function install_s3fs {
 function download_and_unzip {
   repo_url=$1
   destination=$2
-  mkdir -p $destination
+  [ -d "$destination" ] && rm -r "$destination" ; mkdir "$destination" || mkdir "$destination"
   say 4 "Downloading and extracting GitHub repository..."
   curl -sSL $repo_url -o repo.zip
   unzip -qq repo.zip -d $destination
