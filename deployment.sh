@@ -137,7 +137,7 @@ fi
 
 # Download and unzip Kustomization files from GitHub
 repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.zip"
-destination="~/manifest"
+destination="/root/manifest"
 download_and_unzip $repo_url $destination
 
 # Deploy a Bold BI application using Kustomize
