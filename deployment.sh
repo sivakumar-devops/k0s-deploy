@@ -5,6 +5,23 @@ set -e
 # Variable declaration.
 directory="/mnt/boldbi_data"
 
+# Parse command-line arguments
+for arg in "$@"; do
+  case $arg in
+    --aws-access-key=*)
+      aws_access_key="${arg#*=}"
+      ;;
+    --aws-access-secret=*)
+      aws_secret_access_key="${arg#*=}"
+      ;;
+    --s3-bucket=*)
+      s3_bucket="${arg#*=}"
+      ;;
+  esac
+done
+
+echo "$aws_access_key $s3_bucket $aws_secret_access_key"
+
 # Function to display colored output
 function say {
   color=$1
@@ -85,7 +102,7 @@ function mount_s3_bucket {
 # Function to show Bold BI text graphic
 function show_bold_bi_graphic {
   echo ""
-  echo "███████╗██╗   ██╗██████╗ ███████╗██████╗ ██╗      ██████╗  ██████╗ ██████╗ "
+  echo " ██████╗██╗   ██╗██████╗ ███████╗██████╗ ██╗      ██████╗  ██████╗ ██████╗ "
   echo "██╔════╝██║   ██║██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗██╔═══██╗██╔══██╗"
   echo "██║     ██║   ██║██████╔╝█████╗  ██████╔╝██║     ██║   ██║██║   ██║██████╔╝"
   echo "██║     ██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗██║     ██║   ██║██║   ██║██╔══██╗"
