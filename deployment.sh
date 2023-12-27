@@ -125,11 +125,11 @@ fi
 
 # Download and unzip Kustomization files from GitHub
 repo_url="https://github.com/yourusername/yourrepo/archive/main.zip"
-destination="~"
+destination="~/private-cloud"
 download_and_unzip $repo_url $destination
 
 # Deploy a sample application using Kustomize
-say 4 "Deploying sample application..."
+say 4 "Deploying Bold BI application..."
 kubectl apply -k $destination
 
-say 2 "Sample application deployed successfully!"
+say 2 "Bold BI application deployed successfully!"
