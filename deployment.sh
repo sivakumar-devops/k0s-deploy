@@ -20,8 +20,6 @@ for arg in "$@"; do
   esac
 done
 
-echo "$aws_access_key $s3_bucket $aws_secret_access_key"
-
 # Function to display colored output
 function say {
   color=$1
@@ -94,7 +92,8 @@ function mount_s3_bucket {
   say 4 "Mounting S3 bucket..."
   echo "$aws_access_key:$aws_secret_access_key" > ~/.passwd-s3fs
   chmod 600 ~/.passwd-s3fs
-  echo "$s3_bucket $directory fuse.s3fs _netdev,allow_other,use_path_request_style,url=https://s3.amazonaws.com 0 0" | sudo tee -a /etc/fstab
+  #echo "$s3_bucket $directory fuse.s3fs rw,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other,use_path_request_style,url=https://s3.amazonaws.com 0 0" | sudo tee -a /etc/fstab
+  s3fs $s3_bucket $directory -o passwd_file=~/.passwd-s3fs -o url=https://s3.amazonaws.com
   sudo mount -a
   say 2 "S3 bucket mounted successfully."
 }
