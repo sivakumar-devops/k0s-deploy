@@ -82,6 +82,18 @@ function mount_s3_bucket {
   say 2 "S3 bucket mounted successfully."
 }
 
+# Function to show Bold BI text graphic
+function show_bold_bi_graphic {
+  echo ""
+  echo " ██████╗██╗   ██╗██████╗ ███████╗██████╗ ██╗      ██████╗  ██████╗ ██████╗ "
+  echo "██╔════╝██║   ██║██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗██╔═══██╗██╔══██╗"
+  echo "██║     ██║   ██║██████╔╝█████╗  ██████╔╝██║     ██║   ██║██║   ██║██████╔╝"
+  echo "██║     ██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗██║     ██║   ██║██║   ██║██╔══██╗"
+  echo "╚██████╗╚██████╔╝██║     ███████╗██║  ██║███████╗╚██████╔╝╚██████╔╝██║  ██║"
+  echo " ╚═════╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝"
+  echo ""
+}
+
 # Check if S3 bucket details are provided
 if [ -n "$aws_access_key" ] && [ -n "$aws_secret_access_key" ] && [ -n "$s3_bucket" ]; then
   # Install s3fs if not present
@@ -131,5 +143,8 @@ download_and_unzip $repo_url $destination
 # Deploy a sample application using Kustomize
 say 4 "Deploying Bold BI application..."
 kubectl apply -k $destination
+
+# Show Bold BI text graphic
+show_bold_bi_graphic
 
 say 2 "Bold BI application deployed successfully!"
