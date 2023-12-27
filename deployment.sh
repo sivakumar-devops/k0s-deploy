@@ -137,12 +137,12 @@ fi
 
 # Download and unzip Kustomization files from GitHub
 repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.zip"
-destination="private-cloud"
+destination="~/manifest"
 download_and_unzip $repo_url $destination
 
 # Deploy a Bold BI application using Kustomize
 say 4 "Deploying Bold BI application..."
-k0s kubectl apply -k $destination
+k0s kubectl apply -k $destination/private-cloud
 
 # Show Bold BI text graphic
 show_bold_bi_graphic
