@@ -148,3 +148,4 @@ k0s kubectl apply -k $destination/private-cloud
 #show_bold_bi_graphic
 
 say 2 "Bold BI application deployed successfully!"
+say 4 "You can access "boldbi" on your machine's IP with port number 30080, and Redis on port 32379."
