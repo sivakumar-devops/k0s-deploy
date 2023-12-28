@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Copyright (c) Syncfusion Inc. All rights reserved.
+#
 
 set -e
 
@@ -98,15 +100,14 @@ function mount_s3_bucket {
   say 2 "S3 bucket mounted successfully."
 }
 
-# Function to show Bold BI text graphic
 function show_bold_bi_graphic {
   echo ""
-  echo " ██████╗██╗   ██╗██████╗ ███████╗██████╗ ██╗      ██████╗  ██████╗ ██████╗ "
-  echo "██╔════╝██║   ██║██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗██╔═══██╗██╔══██╗"
-  echo "██║     ██║   ██║██████╔╝█████╗  ██████╔╝██║     ██║   ██║██║   ██║██████╔╝"
-  echo "██║     ██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗██║     ██║   ██║██║   ██║██╔══██╗"
-  echo "╚██████╗╚██████╔╝██║     ███████╗██║  ██║███████╗╚██████╔╝╚██████╔╝██║  ██║"
-  echo " ╚═════╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝"
+  echo "██████╗   ██████╗  ██╗      ███████╗     ██████╗  ████████╗ "
+  echo "██╔══██╗ ██╔═══██╗ ██║      ██╔═══██╗    ██╔══██╗   ╚██╔══╝ "
+  echo "██████╔╝ ██║   ██║ ██║      ██║   ██║    ██████╔╝    ██║    "
+  echo "██╔══██╗ ██║   ██║ ██║      ██║   ██║    ██╔══██╗    ██║    "
+  echo "██████╔╝ ╚██████╔╝ ███████╗ ███████╔╝    ██████╔╝ ████████╗ "
+  echo " ╚════╝   ╚═════╝  ╚══════╝  ╚═════╝      ╚════╝   ╚══════╝ " 
   echo ""
 }
 
@@ -161,7 +162,7 @@ say 4 "Deploying Bold BI application..."
 k0s kubectl apply -k $destination/private-cloud
 
 # Show Bold BI text graphic
-#show_bold_bi_graphic
+show_bold_bi_graphic
 
 say 2 "Bold BI application deployed successfully!"
 say 4 "You can access "boldbi" on your machine's IP with port number 30080, and Redis on port 32379."
