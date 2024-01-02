@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Copyright (c) Syncfusion Inc. All rights reserved.
-#
 
 set -e
 
