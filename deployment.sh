@@ -25,7 +25,7 @@ done
 function say {
   color=$1
   message=$2
-  echo "$(tput setaf $color)$message$(tput sgr0)"
+  echo "Info: $(tput setaf $color)$message$(tput sgr0)"
 }
 
 # Function to display error message and exit
