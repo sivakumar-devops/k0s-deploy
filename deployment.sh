@@ -40,7 +40,6 @@ function command_exists {
   command -v "$1" >/dev/null 2>&1
 }
 
-
 # Function to install zip if not present
 function install_zip {
   if ! command_exists zip; then
@@ -76,7 +75,6 @@ function download_and_unzip {
   rm repo.zip
 }
 
-
 # Function to create a new directory
 function create_directory {
   directory=$1
@@ -94,7 +92,6 @@ function mount_s3_bucket {
   say 4 "Mounting S3 bucket..."
   echo "$aws_access_key:$aws_secret_access_key" > ~/.passwd-s3fs
   chmod 600 ~/.passwd-s3fs
-  #echo "$s3_bucket $directory fuse.s3fs rw,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other,use_path_request_style,url=https://s3.amazonaws.com 0 0" | sudo tee -a /etc/fstab
   s3fs $s3_bucket $directory -o passwd_file=~/.passwd-s3fs -o url=https://s3.amazonaws.com
   sudo mount -a
   say 2 "S3 bucket mounted successfully."
@@ -112,64 +109,54 @@ function show_bold_bi_graphic {
 }
 
 # Install k0s
-function Install k0s {
-say 4 "Installing k0s..."
-if command_exists k0s; then
-  say 2 "k0s is already installed."
-else
-  curl -sSLf https://get.k0s.sh | sudo sh
-fi
+function Installk0s {
+  say 4 "Installing k0s..."
+  if command_exists k0s; then
+    say 2 "k0s is already installed."
+  else
+    curl -sSLf https://get.k0s.sh | sudo sh
+  fi
 }
 
 # Start k0s cluster 
 function start_k0s {
-if ! k0s kubectl get nodes &> /dev/null; then
-say 4 "Starting k0s cluster..."
-sudo k0s install controller --single &
-sudo k0s start &
-# Wait for k0s to start
-sleep 10
-fi
+  if ! k0s kubectl get nodes &> /dev/null; then
+    say 4 "Starting k0s cluster..."
+    sudo k0s install controller --single &
+    sudo k0s start &
+    sleep 10
+  fi
 }
 
 function install_boldbi {
-# Check if S3 bucket details are provided
-if [ -n "$aws_access_key" ] && [ -n "$aws_secret_access_key" ] && [ -n "$s3_bucket" ]; then
-  # Install s3fs if not present
-  install_s3fs
-  # Create a new directory
-  create_directory $directory
-  # Mount S3 bucket
-  mount_s3_bucket $directory "$aws_access_key" "$aws_secret_access_key" "$s3_bucket"
-else
-  say 3 "Skipping S3 bucket mounting details are not provided."
-fi
-# Install zip if not present
-install_zip
+  if [ -n "$aws_access_key" ] && [ -n "$aws_secret_access_key" ] && [ -n "$s3_bucket" ]; then
+    install_s3fs
+    create_directory $directory
+    mount_s3_bucket $directory "$aws_access_key" "$aws_secret_access_key" "$s3_bucket"
+  else
+    say 3 "Skipping S3 bucket mounting details are not provided."
+  fi
+  install_zip
 
-Install k0s
+  Installk0s
 
-start_k0s
+  start_k0s
 
-# Check if k0s cluster is running
-if ! k0s kubectl get nodes &> /dev/null; then
-  handle_error "k0s cluster is not running."
-fi
+  if ! k0s kubectl get nodes &> /dev/null; then
+    handle_error "k0s cluster is not running."
+  fi
 
-# Download and unzip Kustomization files from GitHub
-repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.zip"
-destination="/manifest"
-download_and_unzip $repo_url $destination
+  repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.zip"
+  destination="/manifest"
+  download_and_unzip $repo_url $destination
 
-# Deploy Bold BI application using Kustomize
-say 4 "Deploying Bold BI application..."
-k0s kubectl apply -k $destination/private-cloud
+  say 4 "Deploying Bold BI application..."
+  k0s kubectl apply -k $destination/private-cloud
 
-# Show Bold BI text graphic
-show_bold_bi_graphic
+  show_bold_bi_graphic
 
-say 2 "Bold BI application deployed successfully!"
-say 4 "You can access "boldbi" on your machine's IP with port number 30080, and Redis on port 32379."
+  say 2 "Bold BI application deployed successfully!"
+  say 4 "You can access "boldbi" on your machine's IP with port number 30080, and Redis on port 32379."
 }
 
 install_boldbi
