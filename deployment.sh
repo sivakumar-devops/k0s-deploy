@@ -109,7 +109,7 @@ function show_bold_bi_graphic {
 }
 
 # Install k0s
-function Installk0s {
+function Install_k0s {
   say 4 "Installing k0s..."
   if command_exists k0s; then
     say 2 "k0s is already installed."
@@ -138,7 +138,7 @@ function install_boldbi {
   fi
   install_zip
 
-  Installk0s
+  Install_k0s
 
   start_k0s
 
