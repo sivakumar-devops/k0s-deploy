@@ -18,6 +18,9 @@ for arg in "$@"; do
     --s3-bucket=*)
       s3_bucket="${arg#*=}"
       ;;
+    --domain=*)
+      domain="${arg#*=}"
+      ;;
   esac
 done
 
@@ -79,6 +82,18 @@ function create_directory {
   directory=$1
   say 4 "Creating directory: $directory"
   sudo mkdir -p $directory
+}
+
+function domain_mapping  {
+# File path to your YAML configuration file
+config_file="/manifest/private-cloud/boldbi/ingress.yaml"
+
+# Domain to replace with
+new_domain="$domain"
+
+# Uncomment and replace domain in the specified lines
+sed -i -e "s/^  #- hosts:/  - hosts:\n    - $new_domain\n      secretName: bold-tls/" "$config_file"
+sed -i -e "s/^  - #host: example.com/  - host: $new_domain/" "$config_file"
 }
 
 # Function to mount S3 bucket
@@ -150,6 +165,13 @@ function install_boldbi {
   destination="/manifest"
   download_and_unzip $repo_url $destination
 
+  say 4 "Checking domain provided"
+  if [ -n "$domain" ]; then
+    domain_mapping
+  else
+    say 3 "Skipping domain mapping as it is not provided"
+  fi
+  
   say 4 "Deploying Bold BI application..."
   k0s kubectl apply -k $destination/private-cloud
 
