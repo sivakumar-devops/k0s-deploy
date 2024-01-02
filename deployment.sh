@@ -122,6 +122,7 @@ function start_k0s {
   if ! k0s kubectl get nodes &> /dev/null; then
     say 4 "Starting k0s cluster..."
     sudo k0s install controller --single &
+    sleep 5
     sudo k0s start &
     sleep 10
   fi
