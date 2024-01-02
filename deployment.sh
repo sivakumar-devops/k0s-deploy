@@ -111,41 +111,45 @@ function show_bold_bi_graphic {
   echo ""
 }
 
-# Check if S3 bucket details are provided
-if [ -n "$aws_access_key" ] && [ -n "$aws_secret_access_key" ] && [ -n "$s3_bucket" ]; then
-  # Install s3fs if not present
-  install_s3fs
-
-  # Create a new directory
-  create_directory $directory
-
-  # Mount S3 bucket
-  mount_s3_bucket $directory "$aws_access_key" "$aws_secret_access_key" "$s3_bucket"
-else
-  say 3 "Skipping S3 bucket mounting details are not provided."
-fi
-
-# Install zip if not present
-install_zip
-
 # Install k0s
+function Install k0s {
 say 4 "Installing k0s..."
 if command_exists k0s; then
   say 2 "k0s is already installed."
 else
   curl -sSLf https://get.k0s.sh | sudo sh
 fi
+}
 
-# Start k0s cluster
+# Start k0s cluster 
+function start_k0s {
+if ! k0s kubectl get nodes &> /dev/null; then
 say 4 "Starting k0s cluster..."
 sudo k0s install controller --single &
-
-sleep 10
-
 sudo k0s start &
-
 # Wait for k0s to start
 sleep 10
+fi
+}
+
+function install_boldbi {
+# Check if S3 bucket details are provided
+if [ -n "$aws_access_key" ] && [ -n "$aws_secret_access_key" ] && [ -n "$s3_bucket" ]; then
+  # Install s3fs if not present
+  install_s3fs
+  # Create a new directory
+  create_directory $directory
+  # Mount S3 bucket
+  mount_s3_bucket $directory "$aws_access_key" "$aws_secret_access_key" "$s3_bucket"
+else
+  say 3 "Skipping S3 bucket mounting details are not provided."
+fi
+# Install zip if not present
+install_zip
+
+Install k0s
+
+start_k0s
 
 # Check if k0s cluster is running
 if ! k0s kubectl get nodes &> /dev/null; then
@@ -157,7 +161,7 @@ repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.
 destination="/manifest"
 download_and_unzip $repo_url $destination
 
-# Deploy a Bold BI application using Kustomize
+# Deploy Bold BI application using Kustomize
 say 4 "Deploying Bold BI application..."
 k0s kubectl apply -k $destination/private-cloud
 
@@ -166,3 +170,6 @@ show_bold_bi_graphic
 
 say 2 "Bold BI application deployed successfully!"
 say 4 "You can access "boldbi" on your machine's IP with port number 30080, and Redis on port 32379."
+}
+
+install_boldbi
