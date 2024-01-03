@@ -92,7 +92,11 @@ config_file="/manifest/private-cloud/boldbi/ingress.yaml"
 new_domain="$domain"
 
 # Uncomment and replace domain in the specified lines
-sed -i -e "s/^#tls:/  tls:/; s/^ *- hosts:/    - hosts:\n      - $new_domain\n    secretName: bold-tls/; s/^#secretName: bold-tls/  secretName: bold-tls/; s/^ *- #host: example.com/  - host: $new_domain/" "$config_file"
+sed -i -e "s/^ *#tls:/  tls:/" "$config_file"
+sed -i -e "s/^ *#- hosts:/  - hosts:/" "$config_file"
+sed -i -e "s/^ *#- example.com/    - $new_domain/" "$config_file"
+sed -i -e "s/^ *#secretName: bold-tls/    secretName: bold-tls/" "$config_file"
+sed -i -e "s/^ *- #host: example.com/  - host: $new_domain/" "$config_file"
 }
 
 # Function to mount S3 bucket
