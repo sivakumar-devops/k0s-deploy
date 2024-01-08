@@ -81,7 +81,7 @@ function update_fileshare_name {
   sed -i -e "s/^ *#- boldbi\/configuration\/pvclaim_azure_smb\.yaml/  - boldbi\/configuration\/pvclaim_azure_smb.yaml/" "$kustomfile"
 
   #sed -i -e "s/^ *- boldbi/configuration/pvclaim_onpremise.yaml/   #- boldbi/configuration/pvclaim_onpremise.yaml/" "$kustomfile"
-  sed -i -e "s/^ *- boldbi\/configuration\/pvclaim_onpremise\.yaml/  #- boldbi\/configuration\/pvclaim_onpremise.yaml/" "$kustomfile"  
+  sed -i -e "s/^ *- boldbi\/configuration\/pvclaim_onpremise\.yaml/  #- boldbi\/configuration\/pvclaim_onpremise.yaml/" "$kustomfile"
 }
 
 # Function to update app_base_url in deployment file
@@ -92,13 +92,13 @@ function app_base_url_mapping {
 
 # Function to configure NGINX
 function nginx_configuration {
-  cluster_ip=$(k0s kubectl get service ingress-nginx-controller -n ingress-nginx -o jsonpath='{.spec.clusterIP}')
+  cluster_ip=$(kubectl get service ingress-nginx-controller -n ingress-nginx -o jsonpath='{.spec.clusterIP}')
   domain=$(echo "$app_base_url" | sed 's~^https\?://~~')
   nginx_conf="/etc/nginx/sites-available/default"
-  
+
   # Remove existing nginx configuration file
   [ -e "$nginx_conf" ] && rm "$nginx_conf"
-  
+
   if [ -n "$app_base_url" ]; then
     nginx_conf_content="
     server {
@@ -161,7 +161,7 @@ function show_bold_bi_graphic {
   echo "██████╔╝ ██║   ██║ ██║      ██║   ██║    ██████╔╝    ██║    "
   echo "██╔══██╗ ██║   ██║ ██║      ██║   ██║    ██╔══██╗    ██║    "
   echo "██████╔╝ ╚██████╔╝ ███████╗ ███████╔╝    ██████╔╝ ████████╗ "
-  echo " ╚════╝   ╚═════╝  ╚══════╝  ╚═════╝      ╚════╝   ╚══════╝ " 
+  echo " ╚════╝   ╚═════╝  ╚══════╝  ╚═════╝      ╚════╝   ╚══════╝ "
   echo ""
 }
 
@@ -195,17 +195,17 @@ function install_bold_bi {
   else
       say 3 "Skipping app_base_url mapping as it is not provided"
   fi
-  
+
   k0s kubectl get nodes &> /dev/null || handle_error "k0s cluster is not running."
-  
+
   if [ -n "$storage_account_name" ] && [ -n "$storage_account_key" ] && [ -n "$fileshare_name" ]; then
     update_fileshare_name
     # Check if the secret already exists
-    if k0s kubectl get secret bold-azure-secret > /dev/null 2>&1; then
+    if kubectl get secret bold-azure-secret > /dev/null 2>&1; then
       say 4 "Secret bold-azure-secret already exists. Skipping creation."
     else
       say 4 "Creating azure secret"
-      k0s kubectl create secret generic bold-azure-secret --from-literal azurestorageaccountname="$storage_account_name" --from-literal azurestorageaccountkey="$storage_account_key" --type=Opaque
+      kubectl create secret generic bold-azure-secret --from-literal azurestorageaccountname="$storage_account_name" --from-literal azurestorageaccountkey="$storage_account_key" --type=Opaque
     fi
   else
     say 3 "Skipping fileshare mounting details as they are not provided."
