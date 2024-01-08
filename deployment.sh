@@ -77,8 +77,11 @@ function update_fileshare_name {
   fi
 
   kustomfile="$destination/private-cloud/kustomization.yaml"
-  sed -i -e "s/^ *#- boldbi/configuration/pvclaim_azure_smb.yaml/  - boldbi/configuration/pvclaim_azure_smb.yaml/" "$kustomfile"
-  sed -i -e "s/^ *- boldbi/configuration/pvclaim_onpremise.yaml/   #- boldbi/configuration/pvclaim_onpremise.yaml/" "$kustomfile"
+  #sed -i -e "s/^ *#- boldbi/configuration/pvclaim_azure_smb.yaml/  - boldbi/configuration/pvclaim_azure_smb.yaml/" "$kustomfile"
+  sed -i -e "s/^ *#- boldbi\/configuration\/pvclaim_azure_smb\.yaml/  - boldbi\/configuration\/pvclaim_azure_smb.yaml/" "$kustomfile"
+
+  #sed -i -e "s/^ *- boldbi/configuration/pvclaim_onpremise.yaml/   #- boldbi/configuration/pvclaim_onpremise.yaml/" "$kustomfile"
+  sed -i -e "s/^ *#- boldbi\/configuration\/pvclaim_onpremise\.yaml/  - boldbi\/configuration\/pvclaim_onpremise.yaml/" "$kustomfile"  
 }
 
 # Function to update app_base_url in deployment file
