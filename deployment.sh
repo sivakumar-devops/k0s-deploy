@@ -71,7 +71,7 @@ function download_and_unzip_manifest {
 function update_fileshare_name {
   pvconfig_file="$destination/private-cloud/boldbi/configuration/pvclaim_azure_smb.yaml"
   if [ -f "$pvconfig_file" ]; then
-    sed -i -e "s/^ *shareName: <fileshare>/  shareName: $fileshare_name/" "$pvconfig_file"
+    sed -i -e "s/^ *shareName: <fileshare>/   shareName: $fileshare_name/" "$pvconfig_file"
   else
     handle_error "Pvclaim file is not available"
   fi
@@ -81,7 +81,7 @@ function update_fileshare_name {
   sed -i -e "s/^ *#- boldbi\/configuration\/pvclaim_azure_smb\.yaml/  - boldbi\/configuration\/pvclaim_azure_smb.yaml/" "$kustomfile"
 
   #sed -i -e "s/^ *- boldbi/configuration/pvclaim_onpremise.yaml/   #- boldbi/configuration/pvclaim_onpremise.yaml/" "$kustomfile"
-  sed -i -e "s/^ *#- boldbi\/configuration\/pvclaim_onpremise\.yaml/  - boldbi\/configuration\/pvclaim_onpremise.yaml/" "$kustomfile"  
+  sed -i -e "s/^ *- boldbi\/configuration\/pvclaim_onpremise\.yaml/  #- boldbi\/configuration\/pvclaim_onpremise.yaml/" "$kustomfile"  
 }
 
 # Function to update app_base_url in deployment file
@@ -188,7 +188,7 @@ function install_bold_bi {
   download_and_unzip_manifest
   install_k0s
   start_k0s
-
+  echo $app_base_url
   say 4 "Checking app_base_url provided"
   [ -n "$app_base_url" ] && app_base_url_mapping || say 3 "Skipping app_base_url mapping as it is not provided"
   
