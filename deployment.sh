@@ -201,11 +201,11 @@ function install_bold_bi {
   if [ -n "$storage_account_name" ] && [ -n "$storage_account_key" ] && [ -n "$fileshare_name" ]; then
     update_fileshare_name
     # Check if the secret already exists
-    if kubectl get secret bold-azure-secret > /dev/null 2>&1; then
+    if k0s kubectl get secret bold-azure-secret > /dev/null 2>&1; then
       say 4 "Secret bold-azure-secret already exists. Skipping creation."
     else
       say 4 "Creating azure secret"
-      kubectl create secret generic bold-azure-secret --from-literal azurestorageaccountname="$storage_account_name" --from-literal azurestorageaccountkey="$storage_account_key" --type=Opaque
+      k0s kubectl create secret generic bold-azure-secret --from-literal azurestorageaccountname="$storage_account_name" --from-literal azurestorageaccountkey="$storage_account_key" --type=Opaque
     fi
   else
     say 3 "Skipping fileshare mounting details as they are not provided."
