@@ -87,7 +87,7 @@ function update_fileshare_name {
 # Function to update app_base_url in deployment file
 function app_base_url_mapping {
   deploy_file="$destination/private-cloud/boldbi/deployment.yaml"
-  sed -i -e "s/^ *value: <application_base_url>/  value: $app_base_url/" "$deploy_file"
+  sed -i -e "s|^ *value: <application_base_url>|          value: $app_base_url|" "$deploy_file"
 }
 
 # Function to configure NGINX
@@ -190,16 +190,27 @@ function install_bold_bi {
   start_k0s
   echo $app_base_url
   say 4 "Checking app_base_url provided"
-  [ -n "$app_base_url" ] && app_base_url_mapping || say 3 "Skipping app_base_url mapping as it is not provided"
+  if [ -n "$app_base_url" ]; then
+    app_base_url_mapping
+  else
+      say 3 "Skipping app_base_url mapping as it is not provided"
+  fi
   
   k0s kubectl get nodes &> /dev/null || handle_error "k0s cluster is not running."
   
-  [ -n "$storage_account_name" ] && [ -n "$storage_account_key" ] && [ -n "$fileshare_name" ] && {
+  if [ -n "$storage_account_name" ] && [ -n "$storage_account_key" ] && [ -n "$fileshare_name" ]; then
     update_fileshare_name
-    say 4 "Creating azure secret"
-    kubectl create secret generic bold-azure-secret --from-literal azurestorageaccountname="$storage_account_name" --from-literal azurestorageaccountkey="$storage_account_key" --type=Opaque
-  } || say 3 "Skipping fileshare mounting details as they are not provided."
-  
+    # Check if the secret already exists
+    if kubectl get secret bold-azure-secret > /dev/null 2>&1; then
+      say 4 "Secret bold-azure-secret already exists. Skipping creation."
+    else
+      say 4 "Creating azure secret"
+      kubectl create secret generic bold-azure-secret --from-literal azurestorageaccountname="$storage_account_name" --from-literal azurestorageaccountkey="$storage_account_key" --type=Opaque
+    fi
+  else
+    say 3 "Skipping fileshare mounting details as they are not provided."
+  fi
+
   say 4 "Deploying Bold BI application..."
   k0s kubectl apply -k "$destination/private-cloud"
 
