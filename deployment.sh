@@ -92,7 +92,7 @@ function app_base_url_mapping {
 
 # Function to configure NGINX
 function nginx_configuration {
-  cluster_ip=$(kubectl get service ingress-nginx-controller -n ingress-nginx -o jsonpath='{.spec.clusterIP}')
+  cluster_ip=$(k0s kubectl get service ingress-nginx-controller -n ingress-nginx -o jsonpath='{.spec.clusterIP}')
   domain=$(echo "$app_base_url" | sed 's~^https\?://~~')
   nginx_conf="/etc/nginx/sites-available/default"
   
