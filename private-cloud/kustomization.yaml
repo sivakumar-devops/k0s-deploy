@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - nginx/deployment.yaml
+
+  - azure-file-csi/deployment.yaml
+  
+  - boldbi/namespace.yaml
+  - boldbi/configuration/pvclaim_onpremise.yaml
+  #- boldbi/configuration/pvclaim_azure_smb.yaml
+  - boldbi/configuration/log4net_config.yaml
+  - boldbi/configuration/root-user-details.yaml
+  - boldbi/configuration/version-config.yaml
+  - boldbi/configuration/branding_config.yaml
+  - boldbi/secrets/license-key-secret.yaml
+  - boldbi/secrets/bingmap-secrets.yaml
+  - boldbi/secrets/db-server-secret.yaml
+  - boldbi/service.yaml
+  - boldbi/deployment.yaml
+  - boldbi/hpa.yaml
+  - boldbi/ingress.yaml

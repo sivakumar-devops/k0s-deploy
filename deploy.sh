@@ -13,11 +13,11 @@ for arg in "$@"; do
     --storage-account-name=*)
       storage_account_name="${arg#*=}"
       ;;
-    --storage-account-key=*)
-      storage_account_key="${arg#*=}"
-      ;;
     --fileshare-name=*)
       fileshare_name="${arg#*=}"
+      ;;
+    --folder-name=*)
+      folder_name="${arg#*=}"
       ;;
     --app_base_url=*)
       app_base_url="${arg#*=}"
@@ -69,18 +69,17 @@ function download_and_unzip_manifest {
 
 # Function to update fileshare name in configuration
 function update_fileshare_name {
-  pvconfig_file="$destination/private-cloud/boldbi/configuration/pvclaim_azure_smb.yaml"
+  pvconfig_file="$destination/private-cloud/boldbi/configuration/pvclaim_azure_nfs.yaml"
   if [ -f "$pvconfig_file" ]; then
-    sed -i -e "s/^ *shareName: <fileshare>/   shareName: $fileshare_name/" "$pvconfig_file"
+    sed -i -e "s/^ *path: /<storage_account_name>/<fileshare_name>/<folder_name>/   path: /$storage_account_name/$fileshare_name/$folder_name/" "$pvconfig_file"
+    sed -i -e "s/^ *server: <storage_account_name>.file.core.windows.net/   server: $storage_account_name.file.core.windows.net/" "$pvconfig_file"
   else
     handle_error "Pvclaim file is not available"
   fi
 
   kustomfile="$destination/private-cloud/kustomization.yaml"
-  #sed -i -e "s/^ *#- boldbi/configuration/pvclaim_azure_smb.yaml/  - boldbi/configuration/pvclaim_azure_smb.yaml/" "$kustomfile"
-  sed -i -e "s/^ *#- boldbi\/configuration\/pvclaim_azure_smb\.yaml/  - boldbi\/configuration\/pvclaim_azure_smb.yaml/" "$kustomfile"
+  sed -i -e "s/^ *#- boldbi\/configuration\/pvclaim_azure_nfs\.yaml/  - boldbi\/configuration\/pvclaim_azure_nfs.yaml/" "$kustomfile"
 
-  #sed -i -e "s/^ *- boldbi/configuration/pvclaim_onpremise.yaml/   #- boldbi/configuration/pvclaim_onpremise.yaml/" "$kustomfile"
   sed -i -e "s/^ *- boldbi\/configuration\/pvclaim_onpremise\.yaml/  #- boldbi\/configuration\/pvclaim_onpremise.yaml/" "$kustomfile"
 }
 
@@ -200,13 +199,6 @@ function install_bold_bi {
 
   if [ -n "$storage_account_name" ] && [ -n "$storage_account_key" ] && [ -n "$fileshare_name" ]; then
     update_fileshare_name
-    # Check if the secret already exists
-    if k0s kubectl get secret bold-azure-secret > /dev/null 2>&1; then
-      say 4 "Secret bold-azure-secret already exists. Skipping creation."
-    else
-      say 4 "Creating azure secret"
-      k0s kubectl create secret generic bold-azure-secret --from-literal azurestorageaccountname="$storage_account_name" --from-literal azurestorageaccountkey="$storage_account_key" --type=Opaque
-    fi
   else
     say 3 "Skipping fileshare mounting details as they are not provided."
   fi
