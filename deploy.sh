@@ -98,7 +98,7 @@ function nginx_configuration {
   # Remove existing nginx configuration file
   [ -e "$nginx_conf" ] && rm "$nginx_conf"
 
-  if [ -n "$app_base_url" ]; then
+  if [ -n "$app_base_url" ] && ! [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     nginx_conf_content="
     server {
       listen 80;
