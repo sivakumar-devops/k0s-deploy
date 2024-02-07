@@ -187,7 +187,6 @@ function install_bold_bi {
   download_and_unzip_manifest
   install_k0s
   start_k0s
-  echo $app_base_url
   say 4 "Checking app_base_url provided"
   if [ -n "$app_base_url" ]; then
     app_base_url_mapping
