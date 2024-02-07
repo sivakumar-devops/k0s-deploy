@@ -208,6 +208,8 @@ function install_bold_bi {
 
   show_bold_bi_graphic
 
+  nginx_configuration
+
   say 2 "Bold BI application deployed successfully!"
   say 4 "You can access 'boldbi' on $app_base_url after mapping your machine IP with "$(echo "$app_base_url" | sed 's~^https\?://~~')""
 }
