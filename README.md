@@ -7,7 +7,7 @@ The following steps guide you through the automated deployment of Bold BI with R
 - Managed Database server: PostgreSQL (pgsql), MySQL, or Microsoft SQL Server (mssql).
 
 ## Installation Steps:
-Execute the following command on your Linux VM with app_base_url to install Bold BI with Redis and Nginx. After the installation is completed, you can access Bold BI on your machine's IP with port number 30080, and Redis on port 32379.
+Execute the following command on your Linux VM with app_base_url to deploy Bold BI in a k0s cluster
 
 ```bash
 curl -sSLf https://raw.githubusercontent.com/sivakumar-devops/k0s-deploy/main/deploy.sh | sudo bash -s -- --app_base_url=http://localhost
