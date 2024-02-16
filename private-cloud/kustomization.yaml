@@ -7,7 +7,7 @@ resources:
   - azure-file-csi/deployment.yaml
   
   - boldbi/namespace.yaml
-  - boldbi/configuration/pvclaim_onpremise.yaml
+  #- boldbi/configuration/pvclaim_onpremise.yaml
   #- boldbi/configuration/pvclaim_azure_nfs.yaml
   - boldbi/configuration/log4net_config.yaml
   - boldbi/configuration/root-user-details.yaml
