@@ -8,22 +8,13 @@ When it comes to hosting Bold BI, the deployment strategy depends on pricing tie
 
 For hosting on a single k0s node, the deployment is tailored based on the number of concurrent users. Please find the required resource details in the table below and follow the steps outlined:
 
-| Plan                      | VM Configuration             | DB Configuration                  | Blob Size | Cost                       |
-|---------------------------|------------------------------|-----------------------------------|-----------|----------------------------|
-| Small (10 concurrent users)| 4 vCPU, 16 GB RAM, 256 GB Standard SSD Disk (D4as_v5) | 2 CPU, 8 GB, 128 GB Disk (Standard_D2ads_v5) | 50 GB      | VM - $125.56               |
-|                           |                              |                                   |           | Disk - $19.20              |
-|                           |                              |                                   |           | Bandwidth & IP (Approximate) - $5 |
-|                           |                              |                                   |           | **Total - $150.76**        |
-|                           |                              |                                   |           |                           |
-| Medium (50 concurrent users)| 8 vCPU, 32 GB RAM, 512 GB Disk (D8as_v5) | 4 CPU, 16 GB, 256 GB Disk (Standard_D4ads_v5) | 100 GB     | VM - $251.12               |
-|                           |                              |                                   |           | Disk - $38.40              |
-|                           |                              |                                   |           | Bandwidth & IP (Approximate) - $5 |
-|                           |                              |                                   |           | **Total - $294.52**        |
-|                           |                              |                                   |           |                           |
-|                           |                              |                                   |           | VM Cost - $297             |
-|                           |                              |                                   |           | DB Cost - $290             |
-|                           |                              |                                   |           | Storage Cost (Approximate) - $30 |
-|                           |                              |                                   |           | **Total - $620**           |
+| Plan                      | VM Configuration             | DB Configuration                  | Blob Size |
+|---------------------------|------------------------------|-----------------------------------|-----------|
+| Small (10 concurrent users)| 4 vCPU, 16 GB RAM, 256 GB Standard SSD Disk (D4as_v5) | 2 CPU, 8 GB, 128 GB Disk (Standard_D2ads_v5) | 50 GB      |
+|                           |                              |                                   |           |
+| Medium (50 concurrent users)| 8 vCPU, 32 GB RAM, 512 GB Disk (D8as_v5) | 4 CPU, 16 GB, 256 GB Disk (Standard_D4ads_v5) | 100 GB     |
+|                           |                              |                                   |           |
+
 
 
 1. **Step 1:** [Add your first step here.]
