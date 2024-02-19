@@ -72,13 +72,20 @@ function download_and_unzip_manifest {
 
 # Function to create a folder in NFS file share.
 function create_filshare_folder {
-sudo mkdir -p /mount/$storage_account_name/$fileshare_name
-sudo mount -t nfs $storage_account_name.file.core.windows.net:/$storage_account_name/$fileshare_name /mount/$storage_account_name/$fileshare_name -o vers=4,minorversion=1,sec=sys,nconnect=4
-cd /mount/$storage_account_name/$fileshare_name
-mkdir $folder_name
-chmod 777 $folder_name
-ls -lt
-umount /mount/$storage_account_name/$fileshare_name
+    # Mount NFS file share
+    sudo mkdir -p "/mount/$storage_account_name/$fileshare_name"
+    sudo mount -t nfs "$storage_account_name.file.core.windows.net:/$storage_account_name/$fileshare_name" "/mount/$storage_account_name/$fileshare_name" -o vers=4,minorversion=1,sec=sys,nconnect=4
+
+    # Create folder
+    cd "/mount/$storage_account_name/$fileshare_name" || exit
+    sudo mkdir "$folder_name"
+    sudo chmod 777 "$folder_name"
+
+    # Display directory listing
+    ls -lt
+
+    # Unmount NFS file share
+    sudo umount "/mount/$storage_account_name/$fileshare_name"
 }
 
 # Function to update fileshare name in configuration
