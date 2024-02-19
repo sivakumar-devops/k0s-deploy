@@ -6,8 +6,8 @@ set -e
 # Variable declaration
 repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.zip"
 destination="/manifest"
-storage_account_name="nfssharedstorageaccount"
-fileshare_name="sharedfileshare"
+storage_account_name="newnfsstore"
+fileshare_name="test"
 
 
 # Parse command-line arguments
@@ -68,6 +68,17 @@ function download_and_unzip_manifest {
   curl -sSL "$repo_url" -o repo.zip
   unzip -qq repo.zip -d "$destination"
   rm repo.zip
+}
+
+# Function to create a folder in NFS file share.
+function create_filshare_folder {
+sudo mkdir -p /mount/$storage_account_name/$fileshare_name
+sudo mount -t nfs $storage_account_name.file.core.windows.net:/$storage_account_name/$fileshare_name /mount/$storage_account_name/$fileshare_name -o vers=4,minorversion=1,sec=sys,nconnect=4
+cd /mount/$storage_account_name/$fileshare_name
+mkdir $folder_name
+chmod 777 $folder_name
+ls -lt
+umount /mount/$storage_account_name/$fileshare_name
 }
 
 # Function to update fileshare name in configuration
