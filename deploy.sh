@@ -52,7 +52,7 @@ function install_packages {
     if ! command_exists "$package"; then
       say 4 "Installing $package..."
       sudo apt-get update
-      sudo apt-get install -y "$package"
+      sudo apt-get install -qq -y "$package"
       say 2 "$package installed successfully."
     else
       say 2 "$package is already installed."
@@ -106,7 +106,7 @@ function nginx_configuration {
     server {
       listen 80;
       server_name $domain;
-      return 301 https://$domain"$request_uri";
+      return 301 https://$domain\$request_uri;
     }
 
     server {
@@ -124,7 +124,7 @@ function nginx_configuration {
         proxy_set_header Host \$http_host;
         proxy_cache_bypass \$http_upgrade;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$http_x_forwarded_proto;
+        proxy_set_header X-Forwarded-Proto \$scheme;
         proxy_set_header X-Forwarded-Host \$host;
       }
     }"
@@ -143,7 +143,7 @@ function nginx_configuration {
         proxy_set_header Host \$http_host;
         proxy_cache_bypass \$http_upgrade;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$http_x_forwarded_proto;
+        proxy_set_header X-Forwarded-Proto \$scheme;
         proxy_set_header X-Forwarded-Host \$host;
       }
     }"
