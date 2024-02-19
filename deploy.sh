@@ -6,16 +6,19 @@ set -e
 # Variable declaration
 repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.zip"
 destination="/manifest"
+storage_account_name="nfssharedstorageaccount"
+fileshare_name="sharedfileshare"
+
 
 # Parse command-line arguments
 for arg in "$@"; do
   case $arg in
-    --storage-account-name=*)
-      storage_account_name="${arg#*=}"
-      ;;
-    --fileshare-name=*)
-      fileshare_name="${arg#*=}"
-      ;;
+    # --storage-account-name=*)
+      # storage_account_name="${arg#*=}"
+      # ;;
+    # --fileshare-name=*)
+      # fileshare_name="${arg#*=}"
+      # ;;
     --folder-name=*)
       folder_name="${arg#*=}"
       ;;
@@ -103,7 +106,7 @@ function nginx_configuration {
     server {
       listen 80;
       server_name $domain;
-      return 301 https://$domain$request_uri;
+      return 301 https://$domain"$request_uri";
     }
 
     server {
@@ -183,7 +186,7 @@ function start_k0s {
 
 # Function to install Bold BI
 function install_bold_bi {
-  install_packages nginx zip
+  install_packages nginx zip nfs-common
   download_and_unzip_manifest
   install_k0s
   start_k0s
@@ -197,6 +200,7 @@ function install_bold_bi {
   k0s kubectl get nodes &> /dev/null || handle_error "k0s cluster is not running."
 
   if [ -n "$storage_account_name" ] && [ -n "$folder_name" ] && [ -n "$fileshare_name" ]; then
+    create_filshare_folder
     update_fileshare_name
   else
     say 3 "Skipping fileshare mounting details as they are not provided."
