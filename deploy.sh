@@ -9,7 +9,6 @@ destination="/manifest"
 storage_account_name="newnfsstore"
 fileshare_name="test"
 
-
 # Parse command-line arguments
 for arg in "$@"; do
   case $arg in
@@ -84,6 +83,9 @@ function create_filshare_folder {
 
     # Display directory listing
     ls -lt
+
+    # Change back to root directory
+    cd /
 
     # Unmount NFS file share
     sudo umount "/mount/$storage_account_name/$fileshare_name"
