@@ -72,6 +72,7 @@ function download_and_unzip_manifest {
 
 # Function to create a folder in NFS file share.
 function create_filshare_folder {
+    say 4 "Creating Folder inside the NFS fileshare"
     # Mount NFS file share
     sudo mkdir -p "/mount/$storage_account_name/$fileshare_name"
     sudo mount -t nfs "$storage_account_name.file.core.windows.net:/$storage_account_name/$fileshare_name" "/mount/$storage_account_name/$fileshare_name" -o vers=4,minorversion=1,sec=sys,nconnect=4
