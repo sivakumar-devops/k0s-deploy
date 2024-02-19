@@ -74,7 +74,7 @@ function download_and_unzip_manifest {
 function update_fileshare_name {
   pvconfig_file="$destination/private-cloud/boldbi/configuration/pvclaim_azure_nfs.yaml"
   if [ -f "$pvconfig_file" ]; then
-    sed -i -e "s/^ *path: /<storage_account_name>/<fileshare_name>/<folder_name>/   path: /$storage_account_name/$fileshare_name/$folder_name/" "$pvconfig_file"
+    sed -i -e "s/^ *path: \/<storage_account_name>\/<fileshare_name>\/<folder_name>/   path: \/$storage_account_name\/$fileshare_name\/$folder_name/" "$pvconfig_file"
     sed -i -e "s/^ *server: <storage_account_name>.file.core.windows.net/   server: $storage_account_name.file.core.windows.net/" "$pvconfig_file"
   else
     handle_error "Pvclaim file is not available"
