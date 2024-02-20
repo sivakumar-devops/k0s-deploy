@@ -19,6 +19,22 @@ For hosting on a single k0s node, the deployment is tailored based on the number
 |                           |                              |                                   |           |
 | Medium (50 concurrent users)| 8 vCPU, 32 GB RAM, 512 GB Disk (D8as_v5) | 4 CPU, 16 GB, 256 GB Disk (Standard_D4ads_v5) | 100 GB     |
 
+### Steps for hosting Bold BI on a single node k0s cluster.
+
+**Step1:** Create a Azure VM Based on your plan and users.
+
+**Step2:** Create a Postgresql DB server based on plan.
+
+**Step3:** Create a standard storage account for Blob container storage.
+
+**Step4:** Add private endpoint for the Shared nfs fileshare to connect with the VM.
+
+**Step5:** Connect the VM and run the following command with your app url you wish to access the application in browser and folder name for app data storage.
+
+```bash
+curl -sSLf https://raw.githubusercontent.com/sivakumar-devops/k0s-deploy/main/deploy.sh | sudo bash -s -- --app_base_url=http://localhost --folder-name=bold2
+```
+
 ## Hosting on Multi k8s Node
 
 ### Overview
