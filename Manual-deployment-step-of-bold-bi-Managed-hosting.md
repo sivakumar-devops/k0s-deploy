@@ -13,23 +13,22 @@ single k0s node and multi k8s node deployment. Refer to the following for detail
 
 For hosting on a single k0s node, the deployment is tailored based on the number of concurrent users. Please find the required resource details in the table below and follow the steps outlined:
 
-| Plan                      | VM Configuration             | DB Configuration                  | Blob Size |
-|---------------------------|------------------------------|-----------------------------------|-----------|
-| Small (10 concurrent users)| 4 vCPU, 16 GB RAM, 256 GB Standard SSD Disk (D4as_v5) | 2 CPU, 8 GB, 128 GB Disk (Standard_D2ads_v5) | 50 GB      |
-|                           |                              |                                   |           |
-| Medium (50 concurrent users)| 8 vCPU, 32 GB RAM, 512 GB Disk (D8as_v5) | 4 CPU, 16 GB, 256 GB Disk (Standard_D4ads_v5) | 100 GB     |
+| Plan                       | VM Configuration                                        | DB Configuration                             | Blob Size |
+|----------------------------|---------------------------------------------------------|----------------------------------------------|-----------|
+| Small (10 concurrent users) | 4 vCPU, 16 GB RAM, 256 GB Standard SSD Disk (D4as_v5)   | 2 CPU, 8 GB, 128 GB Disk (Standard_D2ads_v5) | 50 GB      |
+| Medium (50 concurrent users)| 8 vCPU, 32 GB RAM, 512 GB Disk (D8as_v5)                | 4 CPU, 16 GB, 256 GB Disk (Standard_D4ads_v5)| 100 GB     |
 
-### Steps for hosting Bold BI on a single node k0s cluster.
+### Steps for Hosting Bold BI on a Single k0s Node Cluster
 
-**Step1:** Create a Azure VM Based on your plan and users.
+**Step 1:** Create an Azure VM based on your plan and the number of users.
 
-**Step2:** Create a Postgresql DB server based on plan.
+**Step 2:** Set up a PostgreSQL DB server based on your selected plan.
 
-**Step3:** Create a standard storage account for Blob container storage.
+**Step 3:** Create a standard storage account for Blob container storage.
 
-**Step4:** Add private endpoint for the Shared nfs fileshare to connect with the VM.
+**Step 4:** Add a private endpoint for the shared NFS file share to connect with the VM.
 
-**Step5:** Connect the VM and run the following command with your app url you wish to access the application in browser and folder name for app data storage.
+**Step 5:** Connect to the VM and run the following command, replacing the placeholders with your desired values for the application URL and folder name for app data storage:
 
 ```bash
 curl -sSLf https://raw.githubusercontent.com/sivakumar-devops/k0s-deploy/main/deploy.sh | sudo bash -s -- --app_base_url=http://localhost --folder-name="CustomerKCID/Name"
