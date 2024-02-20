@@ -1,6 +1,10 @@
 # How to Manage Site Hosting for Bold BI
 
-When it comes to hosting Bold BI, the deployment strategy depends on pricing tiers and the number of concurrent users. We offer two hosting options: single k0s node and multi k8s node deployment. Refer to the following for detailed deployment steps:
+When it comes to hosting Bold BI, the deployment strategy depends on pricing tiers and the number of concurrent users. We offer two hosting options: 
+single k0s node and multi k8s node deployment. Refer to the following for detailed deployment steps:
+
+1. (Hosting on Single k0s Node)[#Hosting on Single k0s Node]
+2. (Hosting on Multi k8s Node)[#Hosting on Multi k8s Node]
 
 ## Hosting on Single k0s Node
 
