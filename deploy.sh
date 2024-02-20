@@ -6,8 +6,8 @@ set -e
 # Variable declaration
 repo_url="https://github.com/sivakumar-devops/k0s-deploy/raw/main/private-cloud.zip"
 destination="/manifest"
-storage_account_name="newnfsstore"
-fileshare_name="test"
+storage_account_name="nfssharedstorageaccount"
+fileshare_name="sharedfileshare"
 
 # Parse command-line arguments
 for arg in "$@"; do
@@ -133,8 +133,8 @@ function nginx_configuration {
     server {
       server_name $domain;
       listen 443 ssl;
-      ssl_certificate /etc/nginx/sites-available/domain.pem;
-      ssl_certificate_key /etc/nginx/sites-available/domain.key;
+      ssl_certificate /etc/ssl/domain.pem;
+      ssl_certificate_key /etc/ssl/domain.key;
 
       location / {
         proxy_pass http://$cluster_ip;
