@@ -32,7 +32,7 @@ For hosting on a single k0s node, the deployment is tailored based on the number
 **Step5:** Connect the VM and run the following command with your app url you wish to access the application in browser and folder name for app data storage.
 
 ```bash
-curl -sSLf https://raw.githubusercontent.com/sivakumar-devops/k0s-deploy/main/deploy.sh | sudo bash -s -- --app_base_url=http://localhost --folder-name=bold2
+curl -sSLf https://raw.githubusercontent.com/sivakumar-devops/k0s-deploy/main/deploy.sh | sudo bash -s -- --app_base_url=http://localhost --folder-name="CustomerKCID/Name"
 ```
 
 ## Hosting on Multi k8s Node
