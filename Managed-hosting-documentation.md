@@ -7,7 +7,7 @@
 3. After obtaining the customer's company name, create a resource group under the customer's company name in the following subscription:
    - Resource group name: `Companyname-kc{KCID}`
      
-   [Resource Group](https://portal.azure.com/#@syncfusion.com/resource/subscriptions/dc8b2cf7-0d80-4d29-bcba-64a228c5c46e/overview)
+   [Subscription](https://portal.azure.com/#@syncfusion.com/resource/subscriptions/dc8b2cf7-0d80-4d29-bcba-64a228c5c46e/overview)
    
 4. Based on the customer's requirements and plan, choose and create resources with the specific configurations listed below:
 
