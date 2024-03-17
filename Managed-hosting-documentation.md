@@ -55,6 +55,7 @@
 
 ```bash
 curl -sSLf https://raw.githubusercontent.com/sivakumar-devops/k0s-deploy/main/deploy.sh | sudo bash -s -- --app_base_url=https://companyname.boldbi.com --folder-name="companyname"
+```
 
 11. Complete the deployment with the azure blob and database server.
 
