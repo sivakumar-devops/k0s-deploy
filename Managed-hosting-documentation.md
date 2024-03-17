@@ -41,16 +41,17 @@
    - Tag: Environment=Customer
 
 7. Create a private endpoint to the VNet of the virtual machine to connect to the NFS storage account below:
+
    [NFS Storage Account](https://portal.azure.com/#@syncfusion.com/resource/subscriptions/dc8b2cf7-0d80-4d29-bcba-64a228c5c46e/resourceGroups/Shared_Resources/providers/Microsoft.Storage/storageAccounts/nfssharedstorageaccount/overview)
    - Private endpoint name: VM name
    - Private endpoint network: choose the network associated with the VM.
    - Tag: Environment=production
 
-8. Before running the installation command, connect to the VM and perform the following steps:
+9. Before running the installation command, connect to the VM and perform the following steps:
    1. Copy the SSL certificates to the location `/etc/ssl`.
    2. Map the domain name with the IP address.
 
-9. Run the following command, replacing "company name" with the actual name:
+10. Run the following command, replacing "company name" with the actual name:
 
 ```bash
 curl -sSLf https://raw.githubusercontent.com/sivakumar-devops/k0s-deploy/main/deploy.sh | sudo bash -s -- --app_base_url=https://companyname.boldbi.com --folder-name="companyname"
