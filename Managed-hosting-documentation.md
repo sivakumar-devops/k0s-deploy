@@ -1,13 +1,15 @@
 # How to Deploy Bold BI for Managed Hosting Requests for Customers
 
 1. Address the customer details in the intranet portal.
+   
    [Intranet Portal](https://intranet.syncfusion.com/knowncompany)
 
-2. After obtaining the customer's company name, create a resource group under the customer's company name in the following subscription:
+3. After obtaining the customer's company name, create a resource group under the customer's company name in the following subscription:
    - Resource group name: `Companyname-kc{KCID}`
+     
    [Resource Group](https://portal.azure.com/#@syncfusion.com/resource/subscriptions/dc8b2cf7-0d80-4d29-bcba-64a228c5c46e/overview)
    
-3. Based on the customer's requirements and plan, choose and create resources with the specific configurations listed below:
+4. Based on the customer's requirements and plan, choose and create resources with the specific configurations listed below:
 
 | Plan                           | VM Configuration                                       | DB Configuration                              | Blob Size |
 |--------------------------------|--------------------------------------------------------|-----------------------------------------------|-----------|
