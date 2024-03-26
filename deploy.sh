@@ -136,6 +136,10 @@ function nginx_configuration {
       ssl_certificate /etc/ssl/domain.pem;
       ssl_certificate_key /etc/ssl/domain.key;
 
+      proxy_read_timeout 300;
+		  proxy_connect_timeout 300;
+		  proxy_send_timeout 300;
+
       location / {
         proxy_pass http://$cluster_ip;
         proxy_set_header X-Real-IP \$remote_addr;
@@ -154,6 +158,10 @@ function nginx_configuration {
     server {
       listen 80 default_server;
       listen [::]:80 default_server;
+
+      proxy_read_timeout 300;
+		  proxy_connect_timeout 300;
+		  proxy_send_timeout 300;
 
       location / {
         proxy_pass http://$cluster_ip;

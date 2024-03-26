@@ -18,5 +18,5 @@ resources:
   - boldbi/secrets/db-server-secret.yaml
   - boldbi/service.yaml
   - boldbi/deployment.yaml
-  - boldbi/hpa.yaml
+  #- boldbi/hpa.yaml
   - boldbi/ingress.yaml
