@@ -137,8 +137,8 @@ function nginx_configuration {
       ssl_certificate_key /etc/ssl/domain.key;
 
       proxy_read_timeout 300;
-		  proxy_connect_timeout 300;
-		  proxy_send_timeout 300;
+      proxy_connect_timeout 300;
+      proxy_send_timeout 300;
 
       location / {
         proxy_pass http://$cluster_ip;
@@ -160,8 +160,8 @@ function nginx_configuration {
       listen [::]:80 default_server;
 
       proxy_read_timeout 300;
-		  proxy_connect_timeout 300;
-		  proxy_send_timeout 300;
+      proxy_connect_timeout 300;
+      proxy_send_timeout 300;
 
       location / {
         proxy_pass http://$cluster_ip;
