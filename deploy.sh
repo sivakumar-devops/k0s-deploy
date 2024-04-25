@@ -133,6 +133,7 @@ function nginx_configuration {
     server {
       server_name $domain;
       listen 443 ssl;
+      add_header Strict-Transport-Security "max-age=63072000; includeSubdomains;";
       ssl_certificate /etc/ssl/domain.pem;
       ssl_certificate_key /etc/ssl/domain.key;
 
