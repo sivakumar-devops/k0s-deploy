@@ -132,7 +132,7 @@ function nginx_configuration {
     server {
       server_name $domain;
       listen 443 ssl;
-      #add_header Strict-Transport-Security "max-age=63072000; includeSubdomains;";
+      add_header Strict-Transport-Security \"max-age=63072000; includeSubdomains;\";
       ssl_certificate /etc/ssl/domain.pem;
       ssl_certificate_key /etc/ssl/domain.key;
 
@@ -229,8 +229,8 @@ function install_bold_bi {
   k0s kubectl get nodes &> /dev/null || handle_error "k0s cluster is not running."
 
   if [ -n "$storage_account_name" ] && [ -n "$folder_name" ] && [ -n "$fileshare_name" ]; then
-    # create_filshare_folder
-    # update_fileshare_name
+    create_filshare_folder
+    update_fileshare_name
     say 3 "fileshare mounting details provided."
   else
     say 3 "Skipping fileshare mounting details as they are not provided."
