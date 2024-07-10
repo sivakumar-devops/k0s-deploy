@@ -229,8 +229,8 @@ function install_bold_bi {
   k0s kubectl get nodes &> /dev/null || handle_error "k0s cluster is not running."
 
   if [ -n "$storage_account_name" ] && [ -n "$folder_name" ] && [ -n "$fileshare_name" ]; then
-    #create_filshare_folder
-    #update_fileshare_name
+    create_filshare_folder
+    update_fileshare_name
     say 3 "fileshare mounting details provided."
   else
     say 3 "Skipping fileshare mounting details as they are not provided."
