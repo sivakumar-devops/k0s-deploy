@@ -78,9 +78,10 @@ function create_filshare_folder {
 
     # Create folder
     cd "/mount/$storage_account_name/$fileshare_name" || exit
-    sudo mkdir "$folder_name"
-    sudo chmod 777 "$folder_name"
-
+    if [ ! -d "$folder_name" ]; then
+        sudo mkdir "$folder_name"
+        sudo chmod 777 "$folder_name"
+    fi
     # Display directory listing
     ls -lt
 
